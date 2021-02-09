@@ -8,12 +8,14 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import Vuelidate from "vuelidate";
 import vuelidateErrorExtractor, { templates } from "vuelidate-error-extractor";
+import CoreuiVue from '@coreui/vue'
 
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(Vuelidate);
 Vue.use(Notifications);
+Vue.use(CoreuiVue);
 Vue.use(vuelidateErrorExtractor, {
   template: templates.singleErrorExtractor.foundation6,
   messages:

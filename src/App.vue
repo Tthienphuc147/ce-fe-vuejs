@@ -1,32 +1,52 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <router-view />
+    <notifications group="notification" position="bottom right" />
+    <SpinnerLoading v-if="loading" />
   </div>
 </template>
-
-<style>
+<script>
+import { mapState } from "vuex";
+import SpinnerLoading from "./shared/components/SpinnerLoading";
+export default {
+  components: {
+    SpinnerLoading,
+  },
+  computed: {
+    ...mapState("loader", ["loading"]),
+  },
+};
+</script>
+<style lang = "scss">
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  font-family: "Roboto Condensed", sans-serif;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
-
-#nav {
-  padding: 30px;
+.form-error {
+  color: rgb(199, 5, 5);
+  text-align: left;
+  font-size: 12px !important;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.is-invalid {
+  border: 1px solid red !important;
 }
 </style>
