@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view />
-    <notifications group="notification" position="bottom right" />
+    <notifications group="notification" position="top right" />
     <SpinnerLoading v-if="loading" />
   </div>
 </template>

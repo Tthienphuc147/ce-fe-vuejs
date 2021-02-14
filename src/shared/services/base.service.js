@@ -33,11 +33,11 @@ axios.interceptors.response.use(response => {
 }, err => {
     let response = err.response;
 
-    if (response.config.showLoader) {
+    if (response && response.config && response.config.showLoader) {
         store.dispatch('loader/done');
     }
-    if (err.response) {
-        switch (err.response.status) {
+    if (response) {
+        switch (response.status) {
             case 401:
                 store.commit('LOGOUT')
                 router.replace({ path: '/', query: { redirect: router.currentRoute.fullPath } })
@@ -48,13 +48,14 @@ axios.interceptors.response.use(response => {
                 break
         }
     }
+    const errorMessage = response && response.data && response.data.error && response.data.error.message;
     Vue.notify({
         group: "notification",
         title: "Notification",
         type: "error",
-        text: err.message,
+        text: errorMessage
     });
-    return Promise.reject(new Error(err.message))
+    return Promise.reject(errorMessage)
 })
 
 /**
@@ -66,7 +67,7 @@ const get = (url, params = {}) => {
         axios.get(url, {
             params
         }).then(res => {
-            resolve(res.data)
+            resolve(res.data.data)
         }).catch(err => {
             reject(err)
         })
@@ -79,7 +80,7 @@ const get = (url, params = {}) => {
 const post = (url, data = {}) => {
     return new Promise((resolve, reject) => {
         axios.post(url, data).then(res => {
-            resolve(res.data)
+            resolve(res.data.data)
         }).catch(err => {
             reject(err)
         })
@@ -93,7 +94,7 @@ const post = (url, data = {}) => {
 const put = (url, data = {}) => {
     return new Promise((resolve, reject) => {
         axios.put(url, data).then(res => {
-            resolve(res.data)
+            resolve(res.data.data)
         }).catch(err => {
             reject(err)
         })
@@ -107,7 +108,7 @@ const put = (url, data = {}) => {
 const patch = (url, data = {}) => {
     return new Promise((resolve, reject) => {
         axios.patch(url, data).then(res => {
-            resolve(res.data)
+            resolve(res.data.data)
         }).catch(err => {
             reject(err)
         })
@@ -121,7 +122,7 @@ const patch = (url, data = {}) => {
 const del = (url) => {
     return new Promise((resolve, reject) => {
         axios.delete(url, {}).then(res => {
-            resolve(res.data)
+            resolve(res.data.data)
         }).catch(err => {
             reject(err)
         })

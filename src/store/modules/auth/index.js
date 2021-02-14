@@ -12,10 +12,13 @@ const actions = {
 const mutations = {
     //TODO set token
     [TYPES.LOGIN]: (state, loginData) => {
-        state.userInfo = loginData.data
-        state.token = loginData.api_token
-        localStorage.setItem('userInfo', JSON.stringify(loginData.data))
-        localStorage.setItem('token', loginData.api_token)
+        state.userInfo = {
+            email: loginData.email,
+            name: loginData.name
+        }
+        state.token = loginData.jwttoken
+        localStorage.setItem('userInfo', JSON.stringify(state.userInfo))
+        localStorage.setItem('token', loginData.jwttoken)
     },
     [TYPES.LOGOUT]: state => {
         state.userInfo = {}

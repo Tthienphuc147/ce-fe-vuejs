@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    API_ENDPOINT: 'http://it.ued.udn.vn:8888/',
+    API_ENDPOINT: 'http://127.0.0.1:8000/',
 };

@@ -97,8 +97,8 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         login({
-          tai_khoan: this.loginForm.email,
-          mat_khau: this.loginForm.password,
+          email: this.loginForm.email,
+          password: this.loginForm.password,
         })
           .then((res) => {
             this.LOGIN(res);
@@ -107,17 +107,9 @@ export default {
               group: "notification",
               title: "Notification",
               type: "success",
-              text: "Login successful!",
+              text: res.message,
             });
           })
-          .catch((err) => {
-            Vue.notify({
-              group: "notification",
-              title: "Notification",
-              type: "error",
-              text: err.error,
-            });
-          });
         return;
       }
     },
