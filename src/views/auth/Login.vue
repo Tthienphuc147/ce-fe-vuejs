@@ -103,11 +103,12 @@ export default {
           .then((res) => {
             this.LOGIN(res);
             this.$router.push("dashboard");
+            console.log(res);
             Vue.notify({
               group: "notification",
               title: "Notification",
               type: "success",
-              text: res.message,
+              text: "Login Successfully",
             });
           })
         return;
