@@ -1,55 +1,114 @@
-import Vue from 'vue'
+import Vue from "vue";
 
-import store from '../store'
-import VueRouter from 'vue-router'
+import store from "../store";
+import VueRouter from "vue-router";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-const routes = [
-  {
-    path: '',
-    name: 'Login',
-    component: resolve => require(['@/views/auth/Login'], resolve)
-  },
-  {
-    path: '/',
-    name: 'Login',
-    component: resolve => require(['@/views/auth/Login'], resolve)
-  },
-  {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: resolve => require(['@/views/Dashboard'], resolve),
-    meta: {
-      requireAuth: true
-    }
-  }
-]
+const Login = () => import("@/views/auth/Login");
+const Dashboard = () => import("@/views/dashboard/Dashboard");
+const ProfileManager = () =>
+  import("@/views/dashboard/profile-manager/ProfileManager");
+const ListEvaluation = () =>
+  import("@/views/dashboard/evaluation-manager/ListEvaluation");
+const CreateEvaluation = () =>
+  import("@/views/dashboard/evaluation-manager/CreateEvaluation");
+const EditEvaluation = () =>
+  import("@/views/dashboard/evaluation-manager/EditEvaluation");
+const configRoutes = () => {
+  return [
+    {
+      path: "/login",
+      name: "Login",
+      component: Login,
+    },
+    {
+      path: "/",
+      name: "Dashboard",
+      component: Dashboard,
+      redirect: "/profile-manager",
+      children: [
+        {
+          path: "profile-manager",
+          name: "ProfileManager",
+          component: ProfileManager,
+          meta: {
+            requireAuth: true,
+          },
+        },
+        {
+          path: "evaluation-manager",
+          name: "EvaluationManager",
+          redirect: "/evaluation-manager/list",
+          meta: {
+            requireAuth: true,
+          },
+          component: {
+            render(c) {
+              return c("router-view");
+            },
+          },
+          children: [
+            {
+              path: "list",
+              name: "ListEvaluation",
+              component: ListEvaluation,
+              meta: {
+                requireAuth: true,
+              },
+            },
+            {
+              path: "create",
+              name: "CreateEvaluation",
+              component: CreateEvaluation,
+              meta: {
+                requireAuth: true,
+              },
+            },
+            {
+              path: "edit/:id",
+              name: "EditEvaluation",
+              component: EditEvaluation,
+              meta: {
+                requireAuth: true,
+              },
+            },
+          ],
+        },
+      ],
+      meta: {
+        requireAuth: true,
+      },
+    },
+  ];
+};
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  linkActiveClass: "active",
+  scrollBehavior: () => ({ y: 0 }),
+  routes: configRoutes(),
+});
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/' && store.getters.getAuthenticationToken) {
-    return next('/dashboard')
+  if (to.path === "/" && store.getters.getAuthenticationToken) {
+    return next("/");
   }
   if (to.meta.requireAuth) {
     if (store.getters.getAuthenticationToken) {
-      next()
+      next();
     } else {
       next({
-        path: '/',
+        path: "/login",
         query: {
-          redirect: to.fullPath
-        }
-      })
+          redirect: to.fullPath,
+        },
+      });
     }
   } else {
-    next()
+    next();
   }
-})
+});
 
-export default router
+export default router;

@@ -13,8 +13,10 @@ const mutations = {
     //TODO set token
     [TYPES.LOGIN]: (state, loginData) => {
         state.userInfo = {
+            id: loginData.id,
             email: loginData.email,
-            name: loginData.name
+            name: loginData.name,
+            role: loginData.role
         }
         state.token = loginData.jwttoken
         localStorage.setItem('userInfo', JSON.stringify(state.userInfo))
@@ -32,6 +34,9 @@ const getters = {
     //TODO get token
     getAuthenticationToken: state => {
         return state.token
+    },
+    getAuthenticationModel: state => {
+        return state.userInfo
     }
 }
 

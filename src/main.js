@@ -6,17 +6,20 @@ import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import Notifications from "vue-notification";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import CoreuiVue from '@coreui/vue'
+import { iconsSet as icons } from './assets/icons/icons.js'
 import Vuelidate from "vuelidate";
-import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.css';
+import VModal from 'vue-js-modal'
 import vuelidateErrorExtractor, { templates } from "vuelidate-error-extractor";
 
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
+Vue.use(CoreuiVue);
 Vue.use(IconsPlugin);
 Vue.use(Vuelidate);
 Vue.use(Notifications);
-Vue.use(Antd);
+Vue.use(VModal)
+Vue.use(require('vue-moment'));
 
 Vue.use(vuelidateErrorExtractor, {
   template: templates.singleErrorExtractor.foundation6,
@@ -31,5 +34,6 @@ Vue.use(vuelidateErrorExtractor, {
 new Vue({
   router,
   store,
+  icons,
   render: h => h(App)
 }).$mount('#app')

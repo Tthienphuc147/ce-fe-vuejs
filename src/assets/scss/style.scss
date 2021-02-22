@@ -1,0 +1,143 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "~@coreui/coreui/scss/coreui";
+
+// If you want to add something do it here
+@import "custom";
+
+.card-header:not(.content-center) > .c-icon:first-child {
+  margin-right: 0.1rem;
+  margin-top: 0.1rem;
+  vertical-align: top;
+  width: 1.2rem;
+  height: 1.2rem;
+  font-size: 1.2rem;
+}
+.border-dash {
+  border-top: 1px dashed rgb(206, 206, 206);
+}
+.header-container {
+  background-color: #fff;
+  padding: 0.5rem;
+  height: 3.2rem;
+  display: flex;
+  align-items: center;
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 1.7rem;
+  }
+  .button-area {
+    .btn-ce {
+      padding:3px 5px;
+      border-radius: 3px;
+      // width: 80px;
+      &--primary {
+        background-color: rgb(230, 89, 7);
+        color:#fff;
+      }
+      &--submit {
+        background-color:rgb(42, 134, 5);
+        color:#fff;
+      }
+      &--cancel {
+        background-color:rgb(202, 202, 202);
+      }
+    }
+  }
+}
+.content-area {
+  background-color: #fff;
+  height:100vh;
+  margin:1.5rem 2rem;
+  .filter-area {
+    .filter-block {
+      label {
+        font-weight: bold;
+      }
+      .form-control {
+        min-width: 10rem;
+      }
+    }
+    .filter-button-area {
+      .btn-ce {
+        padding:3px 5px;
+        border-radius: 2px;
+        width:80px;
+        &--filter {
+          background-color: rgb(2, 124, 28);
+          color:#fff;
+        }
+        &--clear {
+          background-color: rgb(221, 221, 221);
+          color:rgb(24, 23, 23);
+        }
+      }
+    }
+  }
+  .table-area {
+    table {
+      thead {
+        background-color: #dcfae5;
+      }
+      .eva-status {
+        width: 120px;
+        padding:3px 4px;
+        border-radius: 2px;
+        font-weight: bold;
+        &--new {
+          background-color: #F29D18;
+          color:#fff;
+        }
+        &--evaluated {
+          background-color: #D7F7D6;
+          color:#000;
+        }
+        &--waiting {
+          background-color: #73A1EA;
+          color:#fff;
+        }
+        &--approved {
+          background-color: #388B59;
+          color:#fff;
+        }
+      }
+      .table-icon {
+        &--view {
+          color:#f1870d
+        }
+      }
+    }
+  }
+}
+.vm--modal{
+  min-height: 450px !important;
+  padding: 1.5rem 2rem !important;
+}
+.container-modal {
+  .title{
+    font-size: 20px;
+  }
+  .filter-block {
+    label {
+      font-weight: bold;
+    }
+    .form-control {
+      min-width: 10rem;
+    }
+  }
+  .btn-modal {
+    border: 1px solid rgb(42, 134, 5);
+    width: 80px;
+    &--ok {
+      background-color:rgb(42, 134, 5);
+      color:#fff;
+    }
+    &--cancel {
+      background-color:rgb(235, 235, 235);
+      color: rgb(42, 134, 5);
+    }
+  }
+}

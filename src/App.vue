@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view />
+    <router-view></router-view>
     <notifications group="notification" position="top right" />
     <SpinnerLoading v-if="loading" />
   </div>
@@ -18,6 +18,7 @@ export default {
 };
 </script>
 <style lang = "scss">
+  @import 'assets/scss/style';
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap");
 * {
   margin: 0;

@@ -5,6 +5,7 @@ import router from '../../router'
 import store from '../../store'
 import Vue from "vue";
 
+
 axios.defaults.showLoader = true;
 axios.defaults.timeout = 10000
 axios.defaults.baseURL = environment.API_ENDPOINT
@@ -14,8 +15,12 @@ axios.interceptors.request.use(config => {
     if (config.showLoader) {
         store.dispatch('loader/pending');
     }
-    if (store.state.user && store.state.user.token) {
-        config.headers.Authorization = `Bearer ${store.state.user.token}`
+    if (store.getters.getAuthenticationToken) {
+        config.headers = { 
+            'Authorization': `Bearer ${store.getters.getAuthenticationToken}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
     }
     return config
 }, err => {

@@ -53,7 +53,7 @@
                 />
               </form-group>
               <button
-                class="btn btn-lg btn-primary btn-block btn-login mb-2"
+                class="btn btn-lg btn-primary btn-block btn-login my-2"
                 type="submit"
               >
                 Sign in
@@ -99,18 +99,16 @@ export default {
         login({
           email: this.loginForm.email,
           password: this.loginForm.password,
-        })
-          .then((res) => {
-            this.LOGIN(res);
-            this.$router.push("dashboard");
-            console.log(res);
-            Vue.notify({
-              group: "notification",
-              title: "Notification",
-              type: "success",
-              text: "Login Successfully",
-            });
-          })
+        }).then((res) => {
+          this.LOGIN(res);
+          this.$router.push("/");
+          Vue.notify({
+            group: "notification",
+            title: "Notification",
+            type: "success",
+            text: "Login Successfully",
+          });
+        });
         return;
       }
     },
@@ -120,28 +118,34 @@ export default {
 
 <style lang="scss" scoped>
 .login-container {
-  // background-image: linear-gradient(
-  //   to left bottom,
-  //   #051937,
-  //   #003b63,
-  //   #006179,
-  //   #ffffff,
-  //   #faf8f8
-  // );
+  background-image: url("../../assets/images/login_bg.png");
+  background-position-y: -100px;
+  background-size: cover;
   font-family: "Muli", sans-serif;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   .container {
-    padding: 0 2rem;
+    padding: 0.5rem 1rem;
+    .card-body {
+      padding: 1.5rem 2rem !important;
+      border-radius: 10px !important;
+      h6 {
+        color: #076b2c;
+      }
+    }
     .card {
       box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
         rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
         rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     }
   }
-  h1 {
+  h2 {
     color: #000;
-    padding-bottom: 2rem;
-    font-weight: bold;
+    padding-bottom: 0.2rem;
+    font-size:2rem !important;
+    font-weight: lighter !important;
   }
   a {
     color: #333;
@@ -155,14 +159,13 @@ export default {
     width: 100%;
     height: 40px;
     padding: 0.75rem 1.375rem;
-    font-size: 0.75rem;
+    font-size: 1rem;
     font-weight: 400;
     line-height: 0.83;
     color: #495057;
     background-color: #ffffff;
     background-clip: padding-box;
-    border: 1px solid #d9dfe7;
-    border-radius: 6px;
+    border: 1.5px solid #c0c0c0;
     &:focus {
       color: #000;
       background-color: #fff;
