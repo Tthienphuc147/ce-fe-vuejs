@@ -1,6 +1,10 @@
 <template>
   <div class="loader-overlay">
-    <div class="loading2"></div>
+    <div class="loader">
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+</div>
   </div>
 </template>
 
@@ -19,54 +23,51 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+  margin: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 999;
   cursor: pointer;
-  .loading,
-  .loading2 {
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    align-items: center;
-  }
+  .loader {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 
-  .loading::after {
-    content: "";
-    width: 50px;
-    height: 50px;
-    border: 10px solid #dddddd;
-    border-top-color: #60d460;
-    /* border-bottom-color: #60d460;  -- optional */
-    border-radius: 50%;
-    /* animation: spin 0.6s 0.1s linear infinite both; -- optional */
-    animation: spin 0.8s 0.1s ease-in-out infinite both;
-  }
+	.bar {
+		width: 10px;
+		height: 5px;
+		background: #12aa54;
+		margin: 2px;
+		animation: bar 1s infinite linear;
 
-  .loading2::after {
-    content: "";
-    width: 30px;
-    height: 30px;
-    background: #60d460;
-    border-radius: 50%;
-    opacity: 0.5;
-    animation: bounce 0.4s ease infinite alternate;
-  }
+		&:nth-child(1) {
+			animation-delay: 0s;
+		}
 
-  @keyframes spin {
-    from {
-      transform: rotate(0);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
+		&:nth-child(2) {
+			animation-delay: 0.25s;
+		}
 
-  @keyframes bounce {
-    to {
-      opacity: 1;
-      transform: scale(1.75);
-    }
-  }
+		&:nth-child(3) {
+			animation-delay: 0.5s;
+		}
+	}
+}
+
+@keyframes bar {
+	0% {
+		transform: scaleY(1) scaleX(0.5);
+	}
+
+	50% {
+		transform: scaleY(10) scaleX(1);
+	}
+
+	100% {
+		transform: scaleY(1) scaleX(0.5);
+	}
+}
 }
 </style>

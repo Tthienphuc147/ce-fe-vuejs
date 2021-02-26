@@ -3,9 +3,9 @@
   <div>
     <div class="header-container d-flex">
       <div class="title">Profile Manager</div>
-      <div class="button-area ml-auto d-flex pr-2">
+      <!-- <div class="button-area ml-auto d-flex pr-2">
         <button class="btn btn-ce btn-ce--primary">Change Password</button>
-      </div>
+      </div> -->
     </div>
     <div class="content-area p-3" v-if="profileData">
       <div class="row mb-2">
@@ -31,7 +31,8 @@
       <div class="row mb-2">
         <div class="col-md-6">
           <p class="mb-0 text-left">Department</p>
-          <input type="text" class="form-control" disabled />
+          <input type="text" class="form-control" disabled   v-if="profileData.positionGroup"
+            v-model="profileData.positionGroup.name"/>
         </div>
         <div class="col-md-6">
           <p class="mb-0 text-left">Position</p>
@@ -47,7 +48,7 @@
       <div class="row mb-2">
         <div class="col-md-6">
           <p class="mb-0 text-left">Birthday</p>
-          <input type="text" class="form-control" disabled />
+          <input type="text" class="form-control" disabled  v-model="profileData.birthday"/>
         </div>
       </div>
     </div>

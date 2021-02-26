@@ -13,7 +13,8 @@
     />
     <span class="title">Competencies Evaluation Manager</span>
    </div>
-    <CHeaderNav class="ml-auto">
+    <CHeaderNav class="ml-auto d-flex">
+       <strong>{{currentUser && currentUser.name}}</strong>
       <TheHeaderDropdownAccount/>
     </CHeaderNav>
   </CHeader>
@@ -22,8 +23,14 @@
 <script>
 import TheHeaderDropdownAccount from './TheHeaderDropdownAccount'
 import { mapMutations} from "vuex";
+import store from "../../store";
 export default {
   name: 'TheHeader',
+  data() {
+      return {
+      currentUser: store.getters.getAuthenticationModel
+    };
+  },
   components: {
     TheHeaderDropdownAccount
   },

@@ -2,3 +2,15 @@
 .c-main {
     padding-top: 0;
 }
+.c-sidebar .c-sidebar-brand {
+    color: #fff !important;
+    background: rgb(255 255 255) !important;
+}
+.c-sidebar {
+    color: #fff !important;
+    background: #28753a !important;
+}
+.c-sidebar .c-sidebar-nav-link:hover, .c-sidebar .c-sidebar-nav-dropdown-toggle:hover {
+    color: #fff;
+    background: #2a8c40 !important;
+}

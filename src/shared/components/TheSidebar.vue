@@ -20,7 +20,7 @@
       />
     </CSidebarBrand>
 
-    <CRenderFunction flat :content-to-render="$options.nav" />
+    <CRenderFunction flat :content-to-render="computedSidebar" />
     <CSidebarMinimizer
       class="d-md-down-none"
       @click.native="set(['sidebarMinimize', !minimize])"
@@ -33,18 +33,40 @@ import nav from "./_nav";
 import { mapMutations, mapGetters } from "vuex";
 export default {
   name: "TheSidebar",
-  nav,
+  data() {
+     return {
+        roleId : null
+     }
+  },
   methods: {
     ...mapMutations(["set"]),
   },
   computed: {
-    ...mapGetters(["getSidebarShow", "getSidebarMinimize"]),
+    ...mapGetters(["getSidebarShow", "getSidebarMinimize","getAuthenticationModel"]),
     show() {
       return this.getSidebarShow;
     },
     minimize() {
       return this.getSidebarMinimize;
     },
+    currentItems() {
+      return (nav || []).filter(item => {
+        return !item.roles || item.roles.includes(this.roleId);
+      });
+    },
+    computedSidebar() {
+     
+      return [
+        {
+          _name: "CSidebarNav",
+          _children: this.currentItems
+        }
+      ];
+    },
+   
   },
+  mounted() {
+        this.roleId = this.getAuthenticationModel.role && this.getAuthenticationModel.role.id
+  }
 };
 </script>

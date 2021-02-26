@@ -43,13 +43,15 @@ axios.interceptors.response.use(response => {
     }
     if (response) {
         switch (response.status) {
+            case 404:
+                router.replace({ path: '/page-not-found', query: { redirect: router.currentRoute.fullPath } })
+                break
             case 401:
                 store.commit('LOGOUT')
                 router.replace({ path: '/', query: { redirect: router.currentRoute.fullPath } })
                 break
             case 403:
-                store.commit('LOGOUT')
-                router.replace({ path: '/', query: { redirect: router.currentRoute.fullPath } })
+                router.replace({ path: '/page-not-permission', query: { redirect: router.currentRoute.fullPath } })
                 break
         }
     }
