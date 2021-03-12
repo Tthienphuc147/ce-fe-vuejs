@@ -17,23 +17,24 @@
       class="text-left d-flex flex-column"
       color="light"
     >
-      <strong>{{currentUser && currentUser.name}}</strong>
+      <strong>{{ currentUser && currentUser.name }}</strong>
       <label class="mb-0">Position: Software Engineer</label>
     </CDropdownHeader>
     <CDropdownDivider />
-    <CDropdownItem @click="logout()"> <CIcon name="cil-lock-locked" /> Logout </CDropdownItem>
+    <CDropdownItem @click="logout()">
+      <CIcon name="cil-lock-locked" /> Logout
+    </CDropdownItem>
   </CDropdown>
 </template>
 
 <script>
-import Vue from "vue";
 import { mapMutations } from "vuex";
 import store from "../../store";
 export default {
   name: "TheHeaderDropdownAccnt",
   data() {
     return {
-      currentUser: store.getters.getAuthenticationModel
+      currentUser: store.getters.getAuthenticationModel,
     };
   },
   methods: {
@@ -41,12 +42,9 @@ export default {
     logout() {
       this.LOGOUT();
       this.$router.push("/login");
-      Vue.notify({
-            group: "notification",
-            title: "Notification",
-            type: "success",
-            text: "Logout Successfully",
-          });
+      this.$toast("Logout Successfully", {
+        type: "success",timeout: 1500
+      });
     },
   },
 };

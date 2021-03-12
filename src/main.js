@@ -14,7 +14,8 @@ import VModal from 'vue-js-modal'
 import VueNumericInput from 'vue-numeric-input';
 import vuelidateErrorExtractor, { templates } from "vuelidate-error-extractor";
 import VueApexCharts from 'vue-apexcharts'
-
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
@@ -27,6 +28,15 @@ Vue.use(VueNumericInput)
 Vue.use(require('vue-moment'));
 Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
+const options = {
+  // You can set your default options here
+};
+Vue.use(Toast, options);
+Vue.use(Toast, {
+  transition: "Vue-Toastification__bounce",
+  maxToasts: 20,
+  newestOnTop: true
+});
 
 Vue.use(vuelidateErrorExtractor, {
   template: templates.singleErrorExtractor.foundation6,

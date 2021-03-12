@@ -1,7 +1,7 @@
 import * as TYPES from "../../../mutation.types";
 import * as periodService from "../../../../shared/services/evaluation-period.service";
 import router from "../../../../router";
-import Vue from "vue";
+
 const state = {
   saveData: null,
   periodListData: [],
@@ -24,11 +24,8 @@ const actions = {
   savePeriod({ commit }, data) {
     periodService.savePeriod(data, data.get("id")).then((res) => {
       commit(TYPES.SAVE_PERIOD, res), router.push("/period-manager");
-      Vue.notify({
-        group: "notification",
-        title: "Notification",
-        type: "success",
-        text: !data.get('id') ? "Create period Successfully" : "Update period Successfully"
+      this.$toast(!data.get('id') ? "Create period Successfully" : "Update period Successfully", {
+        type: "success",timeout: 1500
       });
     });
   },

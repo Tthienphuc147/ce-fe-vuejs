@@ -75,6 +75,7 @@
               :class="{
                 'is-invalid': submitted && $v.profileForm.role.$error,
               }"
+               @change="onChangeRole($event)"
             >
               <option :value="null">-- Choose Role --</option>
               <option
@@ -96,6 +97,30 @@
               v-model="profileForm.birthday"
             ></b-form-datepicker>
         </div>
+        <div class="col-md-6" v-if="isShowManagerSelect">
+           <p class="mb-0 text-left required">Manager</p>
+          <form-group :validator="$v.profileForm.manager" class="form-label-group">
+            <select
+              v-model="profileForm.manager"
+              class="form-control"
+              :class="{
+                'is-invalid': submitted && $v.profileForm.manager.$error,
+              }"
+            >
+              <option :value="null">-- Choose Manager --</option>
+              <option
+                v-for="option in managerData"
+                :value="option.id"
+                :key="option.id"
+              >
+                {{ option.full_name }}
+              </option>
+            </select>
+          </form-group>
+        </div>
+        
+      </div>
+      <div class="row mb-2">
         <div class="col-md-6" v-if="!this.id">
           <p class="mb-0 text-left required">Password Generate</p>
           <div class="d-flex justify-content-between">
@@ -127,6 +152,7 @@
 <script>
 import { getAllPosition } from "../../../shared/services/position.service";
 import { getProfile } from "../../../shared/services/profile.service";
+import { getAllAssociate } from "../../../shared/services/associates.service";
 import { required, email } from "vuelidate/lib/validators";
 import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
@@ -136,15 +162,18 @@ export default {
     return {
       positionData: [],
       roleData: [],
+      managerData: [],
       profileForm: {
         email: "",
         password: "",
         fullName: "",
         position: {},
+        manager: null,
         role: null,
         birthday: null,
       },
       submitted: false,
+      isShowManagerSelect: false
     };
   },
   validations: {
@@ -161,7 +190,13 @@ export default {
   },
   methods: {
     ...mapActions(["saveAssociate"]),
-    ...mapMutations(["GET_ALL_POSITION","GET_PROFILE"]),
+    ...mapMutations(["GET_ALL_POSITION","GET_PROFILE","GET_LIST_ASSOCIATES"]),
+    onChangeRole(event) {
+      if(+event.target.value === 2) {
+        this.isShowManagerSelect = true;
+      }
+      this.isShowManagerSelect = false;
+    },
     generatePassword() {
       const charLowercase = "abcdefghijklmnopqrstuvwxyz";
       const characters =
@@ -200,7 +235,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["getAllPosition", "getAllRole","getProfile"]),
+    ...mapGetters(["getAllPosition", "getAllRole","getProfile", "getAssociateList"]),
   },
   mounted() {
    this.roleData = this.getAllRole;
@@ -215,6 +250,10 @@ export default {
     getAllPosition().then((res) => {
       this.GET_ALL_POSITION(res);
       this.positionData = this.getAllPosition;
+    });
+      getAllAssociate().then((res) => {
+      this.GET_LIST_ASSOCIATES(res);
+      this.managerData = (this.getAssociateList || []).filter(item => item.role_id === 3);
     });
    
   

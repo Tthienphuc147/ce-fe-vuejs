@@ -54,7 +54,6 @@
 
 <script>
 import FormEvaluation from "../evaluation-manager/FormEvaluation";
-import Vue from "vue";
 import { approveEvaluation } from "../../../shared/services/evaluation.service";
 import { mapGetters } from "vuex";
 export default {
@@ -86,12 +85,9 @@ export default {
       const model = new FormData();
       model.append("id", this.$route.params.id);
       approveEvaluation(model).then(() => {
-        Vue.notify({
-          group: "notification",
-          title: "Notification",
-          type: "success",
-          text: "Approve Evaluation Successfully",
-        });
+      this.$toast("Approve Evaluation Successfully", {
+        type: "success",timeout: 1500
+      });
         this.$router.go(-1);
       });
     },

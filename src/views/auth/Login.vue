@@ -67,7 +67,6 @@
 </template>
 
 <script>
-import Vue from "vue";
 import { required, email, minLength } from "vuelidate/lib/validators";
 import { mapMutations } from "vuex";
 import { login } from "../../shared/services/authentication.service";
@@ -102,12 +101,8 @@ export default {
         }).then((res) => {
           this.LOGIN(res);
           this.$router.push("/");
-          Vue.notify({
-            group: "notification",
-            title: "Notification",
-            type: "success",
-            text: "Login Successfully",
-          });
+          this.$toast("Login Successfully", {
+            type:'success',timeout: 1500});
         });
         return;
       }

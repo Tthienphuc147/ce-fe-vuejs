@@ -3,7 +3,6 @@ import axios from 'axios'
 import { environment } from '../../environments'
 import router from '../../router'
 import store from '../../store'
-import Vue from "vue";
 
 
 axios.defaults.showLoader = true;
@@ -16,11 +15,11 @@ axios.interceptors.request.use(config => {
         store.dispatch('loader/pending');
     }
     if (store.getters.getAuthenticationToken) {
-        config.headers = { 
+        config.headers = {
             'Authorization': `Bearer ${store.getters.getAuthenticationToken}`,
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded'
-          }
+        }
     }
     return config
 }, err => {
@@ -56,11 +55,8 @@ axios.interceptors.response.use(response => {
         }
     }
     const errorMessage = response && response.data && response.data.error && response.data.error.message;
-    Vue.notify({
-        group: "notification",
-        title: "Notification",
-        type: "error",
-        text: errorMessage
+    this.$toast(errorMessage, {
+        type: 'error',timeout: 1800
     });
     return Promise.reject(errorMessage)
 })

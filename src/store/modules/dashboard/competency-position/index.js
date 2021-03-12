@@ -1,7 +1,7 @@
 import * as TYPES from "../../../mutation.types";
 import * as competencyPositonService from "../../../../shared/services/competency-position.service";
 import _ from "lodash";
-import Vue from "vue";
+
 const state = {
   comptencyPositionData: [],
   comptencyData: [],
@@ -37,11 +37,8 @@ const actions = {
     competencyPositonService.updateCompetencyPosition(data)
         .then((res) => {
           commit(TYPES.UPDATE_COMPETENCY_POSITION, res),
-          Vue.notify({
-            group: "notification",
-            title: "Notification",
-            type: "success",
-            text: "Update Competency Positiom Successfully"
+          this.$toast("Update Competency Position Mapping Successfully", {
+            type: "success",timeout: 1500
           });
         })
   },

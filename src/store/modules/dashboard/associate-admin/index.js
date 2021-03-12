@@ -1,7 +1,6 @@
 import * as TYPES from '../../../mutation.types'
 import * as associateService from '../../../../shared/services/associates.service'
 import router from "../../../../router";
-import Vue from "vue";
 const state = {
     roleData: null,
     saveData: null
@@ -19,11 +18,8 @@ const actions = {
             .then((res) => {
               commit(TYPES.SAVE_ASSOCIATE, res),
               router.push("/associate-manager");
-              Vue.notify({
-                group: "notification",
-                title: "Notification",
-                type: "success",
-                text: !data.get('id') ? "Create associate Successfully" : "Update associate Successfully"
+              this.$toast(!data.get('id') ? "Create associate Successfully" : "Update associate Successfully", {
+                type: "success",timeout: 1500
               });
             })
       },

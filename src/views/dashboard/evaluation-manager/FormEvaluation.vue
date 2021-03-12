@@ -360,7 +360,6 @@
 </template>
 
 <script>
-import Vue from "vue";
 import moment from "moment";
 import { getProfile } from "../../../shared/services/profile.service";
 import {
@@ -507,15 +506,13 @@ export default {
         this.roleId === 2
           ? this.$router.push("/evaluation-manager")
           : this.$router.go(-1);
-        Vue.notify({
-          group: "notification",
-          title: "Notification",
-          type: "success",
-          text: this.evaluationId
+        const message = this.evaluationId
             ? !isSend
               ? "Update Evaluation Successful."
               : "Submit Evaluation Successful."
-            : "Create Evaluation Successful.",
+            : "Create Evaluation Successful.";
+        this.$toast(message, {
+          type: "success",timeout: 1500
         });
       });
     },

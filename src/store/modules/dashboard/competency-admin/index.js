@@ -1,6 +1,5 @@
 import * as TYPES from "../../../mutation.types";
 import * as competencyService from "../../../../shared/services/competency.service";
-import Vue from "vue";
 import router from "../../../../router";
 import _ from "lodash";
 const state = {
@@ -47,11 +46,8 @@ const actions = {
         .then((res) => {
           commit(TYPES.SAVE_COMPETENCY_ADMIN, res)
           router.push("/competency-manager");
-          Vue.notify({
-            group: "notification",
-            title: "Notification",
-            type: "success",
-            text:  !data.get('id') ? "Create competency Successfully" : "Update competency Successfully"
+          this.$toast(!data.get('id') ? "Create competency Successfully" : "Update competency Successfully", {
+            type: "success",timeout: 1500
           });
         })
   },
