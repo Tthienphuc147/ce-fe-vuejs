@@ -1,10 +1,37 @@
 
 <template>
-    <div>
+  <div>
+    <modal name="modal">
+      <div>
+        <div class="container container-modal">
+          <div class="title text-uppercase font-weight-bold mb-3">confirm</div>
+          <div class="content text-center">
+            <p>Are you sure delete this associate?</p>
+          </div>
+          <div class="button-area d-flex justify-content-center">
+            <button
+              class="btn text-uppercase btn-modal btn-modal--ok btn-sm mr-3"
+              @click="confirmModal()"
+            >
+              Ok
+            </button>
+            <button
+              class="btn text-uppercase btn-modal btn-modal--cancel btn-sm"
+              @click="hideModal()"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </modal>
     <div class="header-container d-flex">
       <div class="title">Associates List</div>
-       <div class="button-area ml-auto d-flex pr-2">
-        <button class="btn btn-ce btn-ce--primary" @click="$router.push('/associate-manager/create')">
+      <div class="button-area ml-auto d-flex pr-2">
+        <button
+          class="btn btn-ce btn-ce--primary"
+          @click="$router.push('/associate-manager/create')"
+        >
           Create Associate
         </button>
       </div>
@@ -60,14 +87,14 @@
           </thead>
           <tbody>
             <tr v-for="(item, index) in associateListFilter" :key="index">
-              <td>{{ index + 1}}</td>
+              <td>{{ index + 1 }}</td>
               <td>
                 {{ item.full_name }}
               </td>
               <td>
                 {{ item.email }}
               </td>
-               <td>
+              <td>
                 {{ item.birthday | date }}
               </td>
               <td>
@@ -90,10 +117,15 @@
                 <div class="d-flex justify-content-center align-items-center">
                   <router-link :to="`/associate-manager/edit/${item.id}`">
                     <i
-                      class="fa fa-eye table-icon--view cursor-pointer"
+                      class="fa fa-eye table-icon--view cursor-pointer mr-2"
                       aria-hidden="true"
                     ></i>
                   </router-link>
+                  <i
+                    class="fa fa-trash table-icon--delete cursor-pointer"
+                    aria-hidden="true"
+                    @click="deleteAssociate()"
+                  ></i>
                 </div>
               </td>
             </tr>
@@ -107,27 +139,26 @@
 <script>
 import { mapMutations, mapGetters } from "vuex";
 import moment from "moment";
-import { getAllAssociate } from "../../../shared/services/associates.service";
+import {
+  getAllAssociate,
+  deleteAssociate,
+} from "../../../shared/services/associates.service";
 import { getAllPosition } from "../../../shared/services/position.service";
 export default {
-  name: 'AdminListAssociate',
-  created() {
-
-  },
+  name: "AdminListAssociate",
+  created() {},
   data() {
     return {
-       associateList: [],
+      associateList: [],
       associateListFilter: [],
       positionData: [],
       filterModel: {
         position: null,
       },
-    }
+    };
   },
-  props: {
-   
-  },
-   methods: {
+  props: {},
+  methods: {
     ...mapMutations(["GET_LIST_ASSOCIATES", "GET_ALL_POSITION"]),
     filter() {
       this.associateListFilter = (this.associateList || []).filter(
@@ -138,6 +169,29 @@ export default {
       this.filterModel.postion = null;
       this.associateListFilter = this.associateList;
     },
+    hideModal() {
+      this.$modal.hide("modal");
+    },
+    deleteAssociate() {
+      this.$modal.show("modal",{id:1});
+    },
+    confirmModal() {
+      deleteAssociate(1).then(() => {
+        this.$toast("Delete associate Successfully", {
+          type: "success",
+          timeout: 1500,
+        });
+        this.$modal.hide("modal");
+        this.getListAssociates();
+      });
+    },
+    getListAssociates() {
+      getAllAssociate().then((res) => {
+      this.GET_LIST_ASSOCIATES(res);
+      this.associateListFilter = this.getAssociateList;
+      this.associateList = this.getAssociateList;
+    });
+    }
   },
   filters: {
     date: (value) => {
@@ -150,20 +204,18 @@ export default {
     ...mapGetters(["getAssociateList", "getAllPosition"]),
   },
   mounted() {
-    getAllAssociate().then((res) => {
-      this.GET_LIST_ASSOCIATES(res);
-      this.associateListFilter = this.getAssociateList;
-      this.associateList = this.getAssociateList;
-    });
+   this.getListAssociates();
     getAllPosition().then((res) => {
       this.GET_ALL_POSITION(res);
       this.positionData = this.getAllPosition;
     });
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-
+.vm--modal {
+  height: 150px !important;
+}
 </style>
 

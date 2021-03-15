@@ -223,6 +223,9 @@ export default {
         if(this.id) {
           requestModel.append("id", this.id);
         }
+        if(this.profileForm.role === 3) {
+          requestModel.append("manager_id",this.profileForm.manager)
+        }
         requestModel.append("fullName", this.profileForm.fullName);
         requestModel.append("email", this.profileForm.email);
         requestModel.append("position_id", this.profileForm.position);

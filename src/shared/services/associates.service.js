@@ -15,5 +15,8 @@ const saveAssociate = (data,id) => {
 const getDetailAssociate= (id) => {
   return http.get(`api/associate/${id}`);
 };
+const deleteAssociate= (id) => {
+  return http.get(`api/associate/delete${id}`);
+};
 
-export { getAllAssociate, getDetailAssociate, saveAssociate };
+export { getAllAssociate, getDetailAssociate, saveAssociate, deleteAssociate };
